@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2010-2024 Evolveum and contributors
+  ~
+  ~ This work is dual-licensed under the Apache License 2.0
+  ~ and European Union Public License. See LICENSE file for details.
+  -->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/connector-schema-3"
+    xmlns:tns="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/connector-schema-3"
+    xmlns:a="http://prism.evolveum.com/xml/ns/public/annotation-3"
+    elementFormDefault="qualified">
+
+    <xsd:annotation>
+        <xsd:documentation>
+            ConnId connector configuration schema.
+
+            The specific connector schemas are based on this definition.
+            MidPoint will look for the definition of top-level element that is
+            by convention the element with local name "configuration". It will use it as basic definition
+            for resource configuration. The definition of "configuration" element will most likely
+            refer to the data types and elements used in this schema definition.
+
+            (Formerly "Identity Connector Framework version 1 (ICF1) connector configuration schema")
+
+            Version: 3.1
+            Recommended namespace prefix: icfc
+        </xsd:documentation>
+        <xsd:appinfo>
+            <a:defaultPrefix>icfc</a:defaultPrefix>
+        </xsd:appinfo>
+    </xsd:annotation>
+
+    <xsd:complexType name="ConfigurationPropertiesType">
+        <xsd:annotation>
+            <xsd:documentation>
+                Connector configuration properties
+            </xsd:documentation>
+            <xsd:appinfo>
+                <a:container/>
+                <a:ignoredNamespace>http://midpoint.evolveum.com/</a:ignoredNamespace>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:any namespace="##any" minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="configurationProperties" type="tns:ConfigurationPropertiesType">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <a:maxOccurs>1</a:maxOccurs>
+                <a:displayOrder>100</a:displayOrder>
+            </xsd:appinfo>
+        </xsd:annotation>
+    </xsd:element>
+
+    <xsd:complexType name="ConnectorPoolConfigurationType">
+        <xsd:annotation>
+            <xsd:documentation>
+                Configuration of ConnId connector pools.
+            </xsd:documentation>
+            <xsd:appinfo>
+                <a:container/>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="minEvictableIdleTimeMillis" type="xsd:int" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Minimum time to wait before evicting idle connector instance from the pool (in milliseconds).
+                        Zero value means no waiting, idle connector is immediately evicted.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="minIdle" type="xsd:int" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Minimum number of idle connector instances kept in the pool.
+                        Idle instances are instances that are not executing any operation at the moment.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="maxIdle" type="xsd:int" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Maximum number of idle connector instances in the pool.
+                        Idle instances are instances that are not executing any operation at the moment.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="maxObjects" type="xsd:int" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Maximum number of connector instances in the pool.
+                        Both active and idle instances are counted.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="maxWait" type="xsd:int" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Maximum time to wait for available connector instance from the pool (in milliseconds).
+                        When the time is reached and connector instance is not available, the operations fails.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="maxIdleTimeMillis" type="xsd:int" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Maximum time that an idle object will be kept in the pool (in milliseconds).
+                        Connectors will not be re-used if they are kept idle in the pool for longer than this interval.
+                        Zero means no time limitation.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="connectorPoolConfiguration" type="tns:ConnectorPoolConfigurationType">
+        <xsd:annotation>
+            <xsd:documentation>
+                Element that contains configuration of ICF connector pools.
+            </xsd:documentation>
+            <xsd:appinfo>
+                <a:maxOccurs>1</a:maxOccurs>
+                <a:displayOrder>200</a:displayOrder>
+            </xsd:appinfo>
+        </xsd:annotation>
+    </xsd:element>
+
+    <xsd:element name="producerBufferSize" type="xsd:int">
+        <xsd:annotation>
+            <xsd:documentation>
+                Size of the buffer for connector that supports search operation.
+            </xsd:documentation>
+            <xsd:appinfo>
+                <a:maxOccurs>1</a:maxOccurs>
+            </xsd:appinfo>
+        </xsd:annotation>
+    </xsd:element>
+
+    <xsd:element name="timeouts" type="tns:TimeoutsType">
+        <xsd:annotation>
+            <xsd:documentation>
+                Connector operation timeout values.
+            </xsd:documentation>
+            <xsd:appinfo>
+                <a:maxOccurs>1</a:maxOccurs>
+                <a:displayOrder>300</a:displayOrder>
+            </xsd:appinfo>
+        </xsd:annotation>
+    </xsd:element>
+
+
+    <xsd:complexType name="TimeoutsType">
+        <xsd:annotation>
+            <xsd:documentation>
+                Connector operation timeout values.
+            </xsd:documentation>
+            <xsd:appinfo>
+                <a:container/>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="create" type="xsd:int" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Timeout for create operation (in milliseconds).
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="get" type="xsd:int" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Timeout for get operation (in milliseconds).
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="update" type="xsd:int" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Timeout for update operation (in milliseconds).
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="delete" type="xsd:int" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Timeout for delete operation (in milliseconds).
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="test" type="xsd:int" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Timeout for test operation (in milliseconds).
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="scriptOnConnector" type="xsd:int" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Timeout for scriptOnConnector operation (in milliseconds).
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="scriptOnResource" type="xsd:int" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Timeout for scriptOnResource operation (in milliseconds).
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="authentication" type="xsd:int" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Timeout for authentication operation (in milliseconds).
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="search" type="xsd:int" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Timeout for search operation (in milliseconds).
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="validate" type="xsd:int" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Timeout for validate operation (in milliseconds).
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="sync" type="xsd:int" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Timeout for sync operation (in milliseconds).
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="schema" type="xsd:int" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Timeout for schema operation (in milliseconds).
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ResultsHandlerConfigurationType">
+        <xsd:annotation>
+            <xsd:documentation>
+                Type that contains configuration of ConnId results handlers.
+                This configuration allow to configure the chain. E.g. to enable case-sensitive searches.
+            </xsd:documentation>
+            <xsd:appinfo>
+                <a:container/>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="enableNormalizingResultsHandler" type="xsd:boolean" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        TODO
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <a:displayOrder>200</a:displayOrder>
+                        <a:help>enableNormalizingResultsHandlerHelp</a:help>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="enableFilteredResultsHandler" type="xsd:boolean" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        TODO
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <a:displayOrder>100</a:displayOrder>
+                        <a:help>enableFilteredResultsHandlerHelp</a:help>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="filteredResultsHandlerInValidationMode" type="xsd:boolean" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        TODO
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <a:displayOrder>110</a:displayOrder>
+                        <a:help>filteredResultsHandlerInValidationModeHelp</a:help>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="enableCaseInsensitiveFilter" type="xsd:boolean" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        TODO
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <a:displayOrder>120</a:displayOrder>
+                        <a:help>enableCaseInsensitiveFilterHelp</a:help>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="enableAttributesToGetSearchResultsHandler" type="xsd:boolean" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        TODO
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <a:displayOrder>300</a:displayOrder>
+                        <a:help>enableAttributesToGetSearchResultsHandlerHelp</a:help>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="resultsHandlerConfiguration" type="tns:ResultsHandlerConfigurationType">
+        <xsd:annotation>
+            <xsd:documentation>
+                Element that contains configuration of ConnId results handlers.
+            </xsd:documentation>
+            <xsd:appinfo>
+                <a:maxOccurs>1</a:maxOccurs>
+                <a:displayOrder>400</a:displayOrder>
+            </xsd:appinfo>
+        </xsd:annotation>
+    </xsd:element>
+
+    <xsd:element name="legacySchema" type="xsd:boolean">
+        <xsd:annotation>
+            <xsd:documentation>
+                Forces schema processing in "legacy" mode.
+                Legacy mode means that __ACCOUNT__ is translated as AccountObjectClass,
+                __GROUP__ as GroupObjectClass and any other as CustomXXXXXObjectClass.
+                Non-legacy mode does not translates object class names. They are used
+                in the same form as provided by the connector.
+            </xsd:documentation>
+            <xsd:appinfo>
+                <a:maxOccurs>1</a:maxOccurs>
+            </xsd:appinfo>
+        </xsd:annotation>
+    </xsd:element>
+
+</xsd:schema>
+

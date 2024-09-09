@@ -1,0 +1,51 @@
+<!--
+  ~ Copyright (c) 2010-2018 Evolveum and contributors
+  ~
+  ~ This work is dual-licensed under the Apache License 2.0
+  ~ and European Union Public License. See LICENSE file for details.
+  -->
+<role oid="181a58ae-90dd-11e8-a371-77713d9f7a57"
+        xmlns="http://midpoint.evolveum.com/xml/ns/public/common/common-3"
+        xmlns:c="http://midpoint.evolveum.com/xml/ns/public/common/common-3"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ri="http://midpoint.evolveum.com/xml/ns/public/resource/instance-3">
+    <name>Blue Swashbuckler</name>
+    <description>Scurvy Blue Swashbuckler</description>
+    <inducement>
+        <construction>
+            <resourceRef oid="10000000-0000-0000-0000-000000000204" type="c:ResourceType"/> <!-- Dummy Blue -->
+            <kind>account</kind>
+            <attribute>
+                <ref>ri:title</ref>
+                <outbound>
+                    <strength>strong</strength>
+                    <expression>
+                        <value>Swashbuckler</value>
+                    </expression>
+                </outbound>
+            </attribute>
+            <attribute>
+                <ref>ri:drink</ref>
+                <outbound>
+                    <strength>strong</strength>
+                    <expression>
+                        <value>grog</value>
+                    </expression>
+                </outbound>
+            </attribute>
+            <association>
+                <ref>ri:group</ref>
+                <outbound>
+                    <strength>strong</strength>
+                    <expression>
+                        <value xsi:type="ShadowAssociationValueType">
+                            <objects>
+                                <ri:group oid="20000000-0000-0000-3333-020400000001"/>
+                            </objects>
+                        </value>
+                    </expression>
+                </outbound>
+            </association>
+        </construction>
+    </inducement>
+</role>

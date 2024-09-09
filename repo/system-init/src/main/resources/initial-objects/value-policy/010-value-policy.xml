@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2010-2017 Evolveum and contributors
+  ~
+  ~ This work is dual-licensed under the Apache License 2.0
+  ~ and European Union Public License. See LICENSE file for details.
+  -->
+<valuePolicy oid="00000000-0000-0000-0000-000000000003"
+        xmlns="http://midpoint.evolveum.com/xml/ns/public/common/common-3"
+        xmlns:t="http://prism.evolveum.com/xml/ns/public/types-3"
+        version="0">
+    <name>Default Password Policy</name>
+    <description>Default password policy</description>
+    <stringPolicy>
+        <description>Testing string policy</description>
+        <limitations>
+            <minLength>8</minLength>
+            <maxLength>14</maxLength>
+            <minUniqueChars>3</minUniqueChars>
+            <checkAgainstDictionary>true</checkAgainstDictionary>
+            <checkPattern/>
+            <checkExpression>
+                <expression>
+                    <script>
+                        <code>
+                            if (object instanceof com.evolveum.midpoint.xml.ns._public.common.common_3.UserType) {
+                            return !basic.containsIgnoreCase(input, object.getName()) &amp;&amp; !basic.containsIgnoreCase(input, object.getFamilyName()) &amp;&amp; !basic.containsIgnoreCase(input, object.getGivenName()) &amp;&amp; !basic.containsIgnoreCase(input, object.getAdditionalName())
+                            } else {
+                            return true
+                            }
+                        </code>
+                    </script>
+                </expression>
+                <failureMessage>must not contain username, family name and given name and additional names</failureMessage>
+            </checkExpression>
+            <limit>
+                <description>Lowercase characters</description>
+                <minOccurs>1</minOccurs>
+                <mustBeFirst>false</mustBeFirst>
+                <characterClass>
+                    <value>abcdefghijklmnopqrstuvwxyz</value>
+                </characterClass>
+            </limit>
+            <limit>
+                <description>Uppercase characters</description>
+                <minOccurs>1</minOccurs>
+                <mustBeFirst>false</mustBeFirst>
+                <characterClass>
+                    <value>ABCDEFGHIJKLMNOPQRSTUVWXYZ</value>
+                </characterClass>
+            </limit>
+            <limit>
+                <description>Numeric characters</description>
+                <minOccurs>1</minOccurs>
+                <mustBeFirst>false</mustBeFirst>
+                <characterClass>
+                    <value>1234567890</value>
+                </characterClass>
+            </limit>
+            <limit>
+                <description>Special characters</description>
+                <minOccurs>0</minOccurs>
+                <mustBeFirst>false</mustBeFirst>
+                <characterClass>
+                    <value> !"#$%&amp;'()*+,-.:;&lt;&gt;?@[]^_`{|}~</value>
+                </characterClass>
+            </limit>
+        </limitations>
+    </stringPolicy>
+</valuePolicy>

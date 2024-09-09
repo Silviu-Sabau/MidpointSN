@@ -1,0 +1,67 @@
+<!--
+  ~ Copyright (c) 2017 Evolveum and contributors
+  ~
+  ~ This work is dual-licensed under the Apache License 2.0
+  ~ and European Union Public License. See LICENSE file for details.
+  -->
+<role oid="10000000-0000-0000-0000-000000001606"
+        xmlns="http://midpoint.evolveum.com/xml/ns/public/common/common-3"
+        xmlns:c="http://midpoint.evolveum.com/xml/ns/public/common/common-3"
+        xmlns:ri="http://midpoint.evolveum.com/xml/ns/public/resource/instance-3">
+    <name>Brute</name>
+    <assignment>
+        <construction>
+            <resourceRef oid="10000000-0000-0000-0000-000000001104" type="c:ResourceType"/>
+            <kind>entitlement</kind>
+            <intent>group</intent>
+        </construction>
+    </assignment>
+    <assignment>
+        <construction>
+            <resourceRef oid="10000000-0000-0000-0000-000000001104" type="c:ResourceType"/>
+            <kind>entitlement</kind>
+            <intent>group-wannabe</intent>
+        </construction>
+    </assignment>
+    <inducement>
+        <construction>
+            <resourceRef oid="10000000-0000-0000-0000-000000001104" type="c:ResourceType"/>
+            <kind>account</kind>
+            <intent>default</intent>
+            <association>
+                <ref>ri:group</ref>
+                <outbound>
+                    <expression>
+                        <associationFromLink>
+                            <projectionDiscriminator>
+                                <kind>entitlement</kind>
+                                <intent>group</intent>
+                            </projectionDiscriminator>
+                        </associationFromLink>
+                    </expression>
+                </outbound>
+            </association>
+        </construction>
+    </inducement>
+    <inducement>
+        <construction>
+            <resourceRef oid="10000000-0000-0000-0000-000000001104" type="c:ResourceType"/>
+            <kind>account</kind>
+            <intent>default</intent>
+            <association>
+                <ref>ri:group</ref>
+                <outbound>
+                    <expression>
+                        <associationFromLink>
+                            <projectionDiscriminator>
+                                <kind>entitlement</kind>
+                                <intent>group-wannabe</intent>
+                            </projectionDiscriminator>
+                        </associationFromLink>
+                    </expression>
+                </outbound>
+            </association>
+        </construction>
+    </inducement>
+    <requestable>true</requestable>
+</role>
